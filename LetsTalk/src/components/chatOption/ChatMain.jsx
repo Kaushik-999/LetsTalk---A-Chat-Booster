@@ -1,23 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import ChatButton from "./ChatButton";
 import ChatBoxMain from "./chatBox/ChatBoxMain";
+import { ChatContext } from "../../context/ChatContext";
 
 function ChatMain() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const { isChatOpen } = useContext(ChatContext);
 
-  const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
-  };
-
-  return (
-    <div>
-      {isChatOpen ? (
-        <ChatBoxMain toggleFunction={toggleChat} />
-      ) : (
-        <ChatButton toggleFunction={toggleChat} />
-      )}
-    </div>
-  );
+  return <div>{isChatOpen ? <ChatBoxMain /> : <ChatButton />}</div>;
 }
 
 export default ChatMain;

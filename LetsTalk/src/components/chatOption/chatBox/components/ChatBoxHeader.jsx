@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import manAvatar from "../../../../images/manPNG.png";
+import { ChatContext } from "../../../../context/ChatContext";
 
-function ChatBoxHeader(props) {
+
+function ChatBoxHeader() {
+  const { toggleChatBox } = useContext(ChatContext);
   return (
     // Chat Box Header
     <div className="flex justify-between items-center bg-sky-600 text-white p-3">
       {/* Chat Box Header Back Icon*/}
       <FontAwesomeIcon
-        onClick={props.toggleFunction}
+        onClick={toggleChatBox}
         className="cursor-pointer ml-1 pl-2 pr-2 text-xl transition-transform duration-300 hover:-translate-x-1"
         icon={faArrowLeft}
       />
@@ -19,7 +22,7 @@ function ChatBoxHeader(props) {
         <img
           src={manAvatar}
           alt="man avatar"
-          className="w-10 h-10 outline-white m-1 bg-sky-600 rounded-full"
+          className="w-9 h-9 outline-white m-1 bg-sky-600 rounded-full"
         />
       </div>
       {/* Chat Box Header Menu Icon*/}

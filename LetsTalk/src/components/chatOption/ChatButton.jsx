@@ -7,7 +7,7 @@ function ChatButton(props) {
     <div>
       <button
         onClick={props.toggleFunction}
-        className="fixed bottom-5 right-5 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 hover:scale-110  transition-transform duration-300 ease-in-out p-4 rounded-full"
+        className="fixed bottom-5 right-5 bg-gradient-to-r from-sky-600 via-sky-500 to-sky-400 hover:scale-110  transition-transform duration-300 ease-in-out p-4 rounded-full"
       >
         <FontAwesomeIcon className="text-white text-2xl" icon={faMessage} />
       </button>

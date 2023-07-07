@@ -13,7 +13,7 @@ function ChatBox(props) {
         <div className="flex items-center">
           <FontAwesomeIcon
             onClick={props.toggleFunction}
-            className="cursor-pointer ml-2 text-xl"
+            className="cursor-pointer ml-1 pl-2 pr-2 text-xl transition-transform duration-300 hover:-translate-x-1"
             icon={faArrowLeft}
           />
         </div>

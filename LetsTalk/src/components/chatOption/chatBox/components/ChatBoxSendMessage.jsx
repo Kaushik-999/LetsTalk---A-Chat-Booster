@@ -1,13 +1,12 @@
-import React, {useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { ChatContext } from "../../../../context/ChatContext";
 
 function ChatBoxSendMessage() {
-  
-  const {onSendMessage} = useContext(ChatContext)
+  const { onSendMessage, scrollToBottomOfChatWindow } = useContext(ChatContext);
 
-  // use state variable 
+  // use state variable
   const [message, setMessage] = useState("");
 
   // update message use state function
@@ -19,6 +18,9 @@ function ChatBoxSendMessage() {
     if (message.trim() !== "") {
       onSendMessage(message.trim());
       setMessage("");
+      setTimeout(() => {
+        scrollToBottomOfChatWindow();
+      }, 10);
     }
   };
 
@@ -27,7 +29,7 @@ function ChatBoxSendMessage() {
       handleSendMessage();
     }
   };
-  
+
   return (
     <div className="flex items-center p-2 ">
       <input
@@ -42,7 +44,7 @@ function ChatBoxSendMessage() {
         onClick={handleSendMessage}
         className="px-4 py-2 font-medium text-white bg-sky-600 rounded-full hover:bg-sky-500 focus:outline-none"
       >
-        <FontAwesomeIcon icon={faPaperPlane}/>
+        <FontAwesomeIcon icon={faPaperPlane} />
       </button>
     </div>
   );

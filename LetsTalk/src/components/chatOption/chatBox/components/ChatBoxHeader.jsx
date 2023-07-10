@@ -7,8 +7,11 @@ import { ChatContext } from "../../../../context/ChatContext";
 
 function ChatBoxHeader() {
   // use to open and close the entire chatbox
-  const { toggleChatBox, updateSetSelectedDropDownOption } =
-    useContext(ChatContext);
+  const {
+    toggleChatBox,
+    updateSetSelectedDropDownOption,
+    toggleClearChatModal,
+  } = useContext(ChatContext);
 
   // display dropdown options on clicking 3-dot icon
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -33,6 +36,9 @@ function ChatBoxHeader() {
   const handleDropdownOptionClick = (option) => {
     setIsDropdownOpen(false);
     updateSetSelectedDropDownOption(option);
+    if (option === "clearChat") {
+      toggleClearChatModal();
+    }
   };
 
   return (

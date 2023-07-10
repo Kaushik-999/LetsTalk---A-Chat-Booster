@@ -69,11 +69,6 @@ function ChatProvider({ children }) {
       setTimeout(() => {
         scrollToBottomOfChatWindow();
       }, 10);
-    } else if (selectedDropDownOption === "clearChat") {
-      const response = window.confirm("Confirm Clear Chat");
-      if (response) {
-        setMessages([{ sender: "admin", text: "Click menu for more options " }]);
-      }
     }
     // eslint-disable-next-line
   }, [selectedDropDownOption]);
@@ -169,6 +164,17 @@ function ChatProvider({ children }) {
     }
   };
 
+  // clear chat modal use State
+  const [isClearChatModalOpen, setIsClearChatModalOpen] = useState(false);
+  const toggleClearChatModal = () => {
+    setIsClearChatModalOpen(!isClearChatModalOpen);
+  };
+
+  // clear chat window - chat header
+  const clearChatWindow = () => {
+    setMessages([{ sender: "admin", text: "Click menu for more options " }]);
+  };
+
   return (
     <ChatContext.Provider
       value={{
@@ -182,6 +188,9 @@ function ChatProvider({ children }) {
         scrollToBottomOfChatWindow,
         pushFAQ,
         handleFaqAnswer,
+        isClearChatModalOpen,
+        toggleClearChatModal,
+        clearChatWindow
       }}
     >
       {children}

@@ -21,12 +21,21 @@ function ChatProvider({ children }) {
   // contains the message list to be display in the chat window
   const [messages, setMessages] = useState([
     { sender: "admin", text: "Hi there!" },
-    // { sender: "admin", text: "FAQ - How to check laptop's accessory compatiblility?" },
-    // { sender: "admin", text: "FAQ - What are essential laptop accessories?" },
-    // { sender: "admin", text: "FAQ - How do I clean laptop accessories?" },
-    // { sender: "admin", text: "FAQ - Can I connect my laptop to an external monitor?" },
-    // { sender: "admin", text: "FAQ - Are there warranty options for laptop accessories?" },
-    // { sender: "admin", text: "FAQ - Send Any Message You Want" },
+    { sender: "admin", text: "Click Here to get FAQ" },
+    // {
+    //   sender: "admin",
+    //   text: "FAQ: How to check laptop's accessory compatiblility?",
+    // },
+    // { sender: "admin", text: "FAQ: What are essential laptop accessories?" },
+    // { sender: "admin", text: "FAQ: How do I clean laptop accessories?" },
+    // {
+    //   sender: "admin",
+    //   text: "FAQ: Can I connect my laptop to an external monitor?",
+    // },
+    // {
+    //   sender: "admin",
+    //   text: "FAQ: Are there warranty options for laptop accessories?",
+    // },
   ]);
 
   // updates the message list to be display in the chat window
@@ -43,32 +52,7 @@ function ChatProvider({ children }) {
   // update messages useState array according to selectedDropDownOption useState
   useEffect(() => {
     if (selectedDropDownOption === "faq") {
-      setMessages([
-        ...messages,
-        {
-          sender: "admin",
-          text: "FAQ - How to check laptop's accessory compatiblility?",
-        },
-        {
-          sender: "admin",
-          text: "FAQ - What are essential laptop accessories?",
-        },
-        {
-          sender: "admin",
-          text: "FAQ - How do I clean laptop accessories?",
-        },
-        {
-          sender: "admin",
-          text: "FAQ - Can I connect my laptop to an external monitor?",
-        },
-        {
-          sender: "admin",
-          text: "FAQ - Are there warranty options for laptop accessories?",
-        },
-      ]);
-      setTimeout(() => {
-        scrollToBottomOfChatWindow();
-      }, 10);
+      pushFAQ();
     } else if (selectedDropDownOption === "form") {
       setMessages([
         ...messages,
@@ -88,11 +72,102 @@ function ChatProvider({ children }) {
     } else if (selectedDropDownOption === "clearChat") {
       const response = window.confirm("Confirm Clear Chat");
       if (response) {
-        setMessages([]);
+        setMessages([{ sender: "admin", text: "Click menu for more options " }]);
       }
     }
     // eslint-disable-next-line
   }, [selectedDropDownOption]);
+
+  //  insert dummy FAQ
+  const pushFAQ = () => {
+    const updatedMessage = messages.filter(
+      (message) => message.text !== "Click Here to get FAQ"
+    );
+
+    setMessages([
+      ...updatedMessage,
+      {
+        sender: "admin",
+        text: "FAQ: How to check laptop's accessory compatiblility?",
+      },
+      {
+        sender: "admin",
+        text: "FAQ: What are essential laptop accessories?",
+      },
+      {
+        sender: "admin",
+        text: "FAQ: How do I clean laptop accessories?",
+      },
+      {
+        sender: "admin",
+        text: "FAQ: Can I connect my laptop to an external monitor?",
+      },
+      {
+        sender: "admin",
+        text: "FAQ: Are there warranty options for laptop accessories?",
+      },
+    ]);
+
+    // drop down option set to null, else it wont display FAQ again. DONT TOUCH THIS ANYWAY!!!!!!
+    setSelectedDropDownOption(null);
+  };
+
+  // dummy answer of dummy FAQ
+  const getFAQAnswer = (question) => {
+    let answer;
+
+    switch (question.toLowerCase()) {
+      case "how to check laptop's accessory compatiblility?":
+        answer =
+          "Refer to the product specifications or consult the manufacturer's website.";
+        break;
+      case "what are essential laptop accessories?":
+        answer =
+          "Laptop bag, mouse, charger, and USB hub are essential accessories.";
+        break;
+      case "how do i clean laptop accessories?":
+        answer =
+          "Use a soft cloth and mild cleaning solution to wipe the accessories gently.";
+        break;
+      case "can i connect my laptop to an external monitor?":
+        answer =
+          "Yes, using the appropriate cable, you can connect your laptop to an external monitor.";
+        break;
+      case "are there warranty options for laptop accessories?":
+        answer =
+          "Warranty options may vary, check with the manufacturer or retailer for warranty details.";
+        break;
+      default:
+        answer = "Sorry, I don't have an answer for that question.";
+        break;
+    }
+
+    return answer;
+  };
+
+  // handle individual faq click and return answer
+  const handleFaqAnswer = (faq) => {
+    // find the selected FAQ in the messages array
+    const selectedFaq = messages.find(
+      (message) => message.text.toLowerCase() === `faq: ${faq.toLowerCase()}`
+    );
+
+    console.log(selectedFaq);
+
+    if (selectedFaq) {
+      // remove the selected FAQ from the list
+      const updatedMessage = messages.filter(
+        (message) => !message.text.startsWith("FAQ:")
+      );
+      const faqAnswer = getFAQAnswer(faq);
+
+      setMessages([
+        ...updatedMessage,
+        { sender: "user", text: selectedFaq.text.replace(/^FAQ:/, "") },
+        { sender: "admin", text: faqAnswer },
+      ]);
+    }
+  };
 
   return (
     <ChatContext.Provider
@@ -105,6 +180,8 @@ function ChatProvider({ children }) {
         updateSetSelectedDropDownOption,
         chatWindowRef,
         scrollToBottomOfChatWindow,
+        pushFAQ,
+        handleFaqAnswer,
       }}
     >
       {children}

@@ -6,7 +6,7 @@ import ChatBoxSendMessage from "./components/ChatBoxSendMessage";
 function ChatBoxMain() {
   return (
     // Chat Box Main Div
-    <div className="fixed bottom-4 right-4 w-1/4 h-4/6 bg-gray-100 border-4 border-sky-600 rounded-xl overflow-y-hidden shadow shadow-blue-300">
+    <div className="fixed bottom-4 right-4 w-1/4 h-4/6 bg-gray-100 border-4 border-sky-600 rounded-xl overflow-y-hidden shadow shadow-blue-300 flex flex-col">
       {/* Chat Box Header - contains back-icon, user avatar, menu icon */}
       <ChatBoxHeader />
 

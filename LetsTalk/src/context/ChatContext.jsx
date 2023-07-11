@@ -5,7 +5,7 @@ const ChatContext = createContext();
 
 function ChatProvider({ children }) {
   // used to toggle between Button and chatbox
-  const [isChatOpen, setIsChatOpen] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const toggleChatBox = () => {
     setIsChatOpen(!isChatOpen);
   };
@@ -22,20 +22,6 @@ function ChatProvider({ children }) {
   const [messages, setMessages] = useState([
     { sender: "admin", text: "Hi there!" },
     { sender: "admin", text: "Click Here to get FAQ" },
-    // {
-    //   sender: "admin",
-    //   text: "FAQ: How to check laptop's accessory compatiblility?",
-    // },
-    // { sender: "admin", text: "FAQ: What are essential laptop accessories?" },
-    // { sender: "admin", text: "FAQ: How do I clean laptop accessories?" },
-    // {
-    //   sender: "admin",
-    //   text: "FAQ: Can I connect my laptop to an external monitor?",
-    // },
-    // {
-    //   sender: "admin",
-    //   text: "FAQ: Are there warranty options for laptop accessories?",
-    // },
   ]);
 
   // updates the message list to be display in the chat window
@@ -175,6 +161,18 @@ function ChatProvider({ children }) {
     setMessages([{ sender: "admin", text: "Click menu for more options " }]);
   };
 
+  // global state for displaying form
+  const [isInfoTaken, setIsInfoTaken] = useState(false);
+  const toggleInfoTaken = () => {
+    setIsInfoTaken(!isInfoTaken);
+  };
+  useEffect(() => {
+    console.log(isInfoTaken); 
+  
+    
+  }, [isInfoTaken])
+  
+
   return (
     <ChatContext.Provider
       value={{
@@ -190,7 +188,9 @@ function ChatProvider({ children }) {
         handleFaqAnswer,
         isClearChatModalOpen,
         toggleClearChatModal,
-        clearChatWindow
+        clearChatWindow,
+        isInfoTaken,
+        toggleInfoTaken,
       }}
     >
       {children}

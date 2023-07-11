@@ -25,7 +25,7 @@ function ClearChatModal() {
           Cancel
         </button>
         <button
-          className="bg-indigo-500 hover:bg-indigo-400 px-7 py-2 ml-2 rounded-md text-sm text-white font-semibold"
+          className="bg-sky-500 hover:bg-sky-400 px-7 py-2 ml-2 rounded-md text-sm text-white font-semibold"
           onClick={() => handleButtonClick("Clear")}
         >
           Clear
